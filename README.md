@@ -14,14 +14,14 @@ Inputs:
 - `github_token` : GitHub access token
 
 Usage example:
-```
+```yaml
       - name: Set access token for internal repo access
         uses: PelionIoT/actions/.github/actions/git-config@main
         with:
           github_token: ${{ secrets.ACCESS_TOKEN }}
 ```
 Especially on self-hosted runners it is important to clean out the `.gitconfig` file afterwards. Otherwise access token renewals will not have impact.
-```
+```yaml
       - name: Cleanup .gitconfig
         if: always()
         run: rm -f ~/.gitconfig
@@ -36,7 +36,9 @@ Inputs:
 - `exceptions` - list of words (comma separated, no spaces inbetween) to ignore for spelling mistakes. Typical one would be for example mosquitto (referring to Apache Mosquitto).
 
 Usage example:
-```
+```yaml
+      - name: Check out code
+        uses: actions/checkout@v4
       - name: Misspell
         uses: PelionIoT/actions/.github/actions/misspell@main
         with:
