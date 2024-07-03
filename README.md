@@ -23,3 +23,15 @@ Especially on self-hosted runners it is important to clean out the `.gitconfig` 
         if: always()
         run: rm -f ~/.gitconfig
 ```
+
+## misspell
+Inputs:
+- `exceptions` - list of words (comma separated, no spaces inbetween) to ignore for spelling mistakes. Typical one would be for example mosquitto (referring to Apache Mosquitto).
+
+Usage example:
+```
+      - name: Misspell
+        uses: PelionIoT/actions/.github/actions/misspell@main
+        with:
+          exceptions: "mosquitto"
+```
