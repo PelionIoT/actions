@@ -16,14 +16,14 @@ runs:
           export MISSPELL_VERSION="v0.6.0"
           curl -sfL https://raw.githubusercontent.com/golangci/misspell/master/install-misspell.sh | sh -s -- -b ./bin ${MISSPELL_VERSION}
           echo "## misspell $MISSPELL_VERSION" >> $GITHUB_STEP_SUMMARY
-          "$HOME/go/bin/misspell" -v
+          ./bin/misspell -v
     - name: Run misspell
       shell: bash
       run: |
           if [ -n "${{ inputs.EXCEPTIONS }}" ]; then
-              "$HOME/go/bin/misspell" --error -i ${{ inputs.EXCEPTIONS }} . >misspell.log
+              ./bin/misspell --error -i ${{ inputs.EXCEPTIONS }} . >misspell.log
           else
-              "$HOME/go/bin/misspell" --error . >misspell.log
+              ./bin/misspell --error . >misspell.log
           fi
     - name: Show misspell.log
       if: always()
