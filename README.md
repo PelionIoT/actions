@@ -30,6 +30,7 @@ Especially on self-hosted runners it is important to clean out the `.gitconfig` 
 ## misspell
 
 Runs the [`misspell`](https://github.com/golangci/misspell) application to spot common spelling mistakes. Exception list (`-i` argument) can be given.
+The action assumes the repository has been checked out already.
 
 Inputs:
 - `exceptions` - list of words (comma separated, no spaces inbetween) to ignore for spelling mistakes. Typical one would be for example mosquitto (referring to Apache Mosquitto).
