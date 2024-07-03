@@ -1,0 +1,38 @@
+name: Misspell
+description: Run misspell to find typical spelling errors (in all files)
+
+inputs:
+  exceptions:
+    description: "List of exceptions to ignore (for example mosquitto,conftagz) - comma separated, no spaces between them."
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install misspell
+      shell: bash
+      run: |
+          export MISSPELL_VERSION="v0.6.0"
+          curl -sfL https://raw.githubusercontent.com/golangci/misspell/master/install-misspell.sh | sh -s -- -b ./bin ${MISSPELL_VERSION}
+          echo "## misspell $MISSPELL_VERSION" >> $GITHUB_STEP_SUMMARY
+          "$HOME/go/bin/misspell" -v
+    - name: Run misspell
+      shell: bash
+      run: |
+          if [ -n "${{ inputs.EXCEPTIONS }}" ]; then
+              "$HOME/go/bin/misspell" --error -i ${{ inputs.EXCEPTIONS }} . >misspell.log
+          else
+              "$HOME/go/bin/misspell" --error . >misspell.log
+          fi
+    - name: Show misspell.log
+      if: always()
+      shell: bash
+      run: |
+            cat misspell.log >> $GITHUB_STEP_SUMMARY
+            lines=$(cat misspell.log | wc -l)
+            if [[ "$lines" = "0" ]]; then
+                echo "misspell is clean" >> $GITHUB_STEP_SUMMARY
+            else
+              exit 1
+            fi
