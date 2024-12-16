@@ -2,6 +2,10 @@ name: Misspell
 description: Run misspell to find typical spelling errors (in all files)
 
 inputs:
+  path:
+    description: "Path to run misspell on, default is ."
+    required: false
+    default: "."
   exceptions:
     description: "List of exceptions to ignore (for example mosquitto,conftagz) - comma separated, no spaces between them."
     required: false
@@ -21,9 +25,9 @@ runs:
       shell: bash
       run: |
           if [ -n "${{ inputs.EXCEPTIONS }}" ]; then
-              ./bin/misspell --error -i ${{ inputs.EXCEPTIONS }} . >misspell.log
+              ./bin/misspell --error -i ${{ inputs.EXCEPTIONS }} ${{ inputs.PATH }} >misspell.log
           else
-              ./bin/misspell --error . >misspell.log
+              ./bin/misspell --error ${{ inputs.PATH }} >misspell.log
           fi
     - name: Show misspell.log
       if: always()

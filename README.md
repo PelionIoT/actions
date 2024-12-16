@@ -34,6 +34,7 @@ The action assumes the repository has been checked out already.
 
 Inputs:
 - `exceptions` - list of words (comma separated, no spaces inbetween) to ignore for spelling mistakes. Typical one would be for example mosquitto (referring to Apache Mosquitto).
+- `path` - list of paths to check, by default `.' (current path). You can use this option to run `misspell` only on specific paths.
 
 Usage example:
 ```yaml
@@ -42,5 +43,5 @@ Usage example:
       - name: Misspell
         uses: PelionIoT/actions/.github/actions/misspell@main
         with:
-          exceptions: "mosquitto"
+          exceptions: "mosquitto,inital"
 ```
